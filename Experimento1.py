@@ -6,10 +6,13 @@ class Exp1:
     def __init__(self, vetor=[]):
 
         self.vetor = vetor
+        self.frequencia_seg = {}
         self.media = 0.0
         self.erro_media = 0.0
         self.desvio = 0.0
         self.compatibilidade = ""
+        self.porcentagem_relativa = {}
+        self.tamanho = 0.0
 
 
     def mediaVetor(self):
@@ -58,8 +61,27 @@ class Exp1:
 
         sns.histplot(data =numpy_array, kde = True);
 
+    def frequencia(self):
+        
+        porcen_rel = 100/120
+        for i in sorted(self.vetor):
+            if i not in self.frequencia_seg:
+                self.frequencia_seg[i] = 1
+
+            if i in self.frequencia_seg:
+                self.frequencia_seg[i] += 1
+
+        for i, j in self.frequencia_seg.items():
+
+            self.porcentagem_relativa[i] = porcen_rel * j
+
+    def largura(self, tamanho):
+        self.tamanho = (max(self.vetor) - min(self.vetor)) / tamanho
+
+
     def __str__(self):
 
-        a = f"Média: {self.media}"+"\n"+f"Desvio: {self.desvio}"+"\n"+f"Erro da média{self.erro_media}"+"\n"+f"Compátibilidade: {self.compatibilidade}"
+        a ="\n"+ f"Média: {self.media}"+"\n"+f"Desvio: {self.desvio}"+"\n"+f"Erro da média: {self.erro_media}"+"\n"+f"Compátibilidade: {self.compatibilidade}"\
+            +"\n"+f"Porcentagem relativa: {self.porcentagem_relativa}" + "\n" +f"Frequencia: {self.frequencia_seg}"+ '\n'+ f"Tamanho bins: {self.tamanho}" + "\n"
 
         return a
